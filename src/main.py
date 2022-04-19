@@ -4,13 +4,10 @@ import argparse
 from time import time
 from hyperlpr import HyperLPR_plate_recognition
 
-path_recording = "data/recording"
-
 
 def main(args):
     cap = get_cap(args)
     cv2.namedWindow("HLPR")
-    idx_file_written = 1
     idx_img = 1
     fps_counter = 5
     fps_value = None
@@ -36,15 +33,6 @@ def main(args):
             key = cv2.waitKey(30)
             if key == ord("q") or key == 27:
                 break
-
-            if key % 256 == 32:
-                # SPACE pressed
-                filename = os.path.join(
-                    path_recording, f"screen_{idx_file_written}.jpg"
-                )
-                cv2.imwrite(filename, img)
-                print(f"{filename} written!")
-                idx_file_written += 1
 
             if idx_img % fps_counter == 0:
                 time_delta = (time() - start) / fps_counter
